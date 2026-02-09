@@ -768,6 +768,302 @@
                 top: 15%;
             }
         }
+
+        /* Mobile Controls */
+        #mobile-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            display: none;
+            pointer-events: none;
+            z-index: 150;
+        }
+
+        .mobile-control-btn {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: rgba(74, 172, 254, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .mobile-control-btn:active {
+            transform: scale(0.9);
+            background: rgba(74, 172, 254, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        #btn-left {
+            bottom: 60px;
+            left: 20px;
+        }
+
+        #btn-right {
+            bottom: 60px;
+            left: 110px;
+        }
+
+        #btn-jump {
+            bottom: 60px;
+            right: 110px;
+        }
+
+        #btn-slide {
+            bottom: 60px;
+            right: 20px;
+        }
+
+        /* Show mobile controls on touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            #mobile-controls {
+                display: block;
+            }
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            #game-logo {
+                font-size: clamp(36px, 10vw, 64px);
+                margin-bottom: 15px;
+            }
+
+            #subtitle {
+                font-size: clamp(14px, 3.5vw, 20px);
+                margin-bottom: 25px;
+            }
+
+            #high-score-display {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+
+            #total-coins-display {
+                font-size: 20px !important;
+                margin-bottom: 15px !important;
+            }
+
+            #play-btn,
+            #store-btn,
+            #theme-btn {
+                padding: 15px 40px;
+                font-size: 22px;
+                margin-top: 10px;
+            }
+
+            #controls-hint {
+                font-size: 14px;
+                padding: 0 15px;
+                margin-top: 25px;
+            }
+
+            #controls-hint span {
+                padding: 4px 10px;
+                font-size: 13px;
+            }
+
+            #score {
+                font-size: 32px;
+                padding: 8px 15px;
+            }
+
+            #multiplier {
+                font-size: 16px;
+                padding: 6px 14px;
+            }
+
+            #coins {
+                font-size: 22px;
+            }
+
+            #coins-display {
+                padding: 6px 12px;
+            }
+
+            .coin-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            #pause-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            #game-over-panel {
+                padding: 30px 20px;
+                max-width: 85%;
+                width: 350px;
+            }
+
+            #game-over-title {
+                font-size: 38px;
+                margin-bottom: 15px;
+            }
+
+            .stat-row {
+                padding: 12px 0;
+            }
+
+            .stat-label {
+                font-size: 16px;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .game-over-btn {
+                padding: 12px 24px;
+                font-size: 16px;
+            }
+
+            #game-over-buttons {
+                gap: 10px;
+                flex-wrap: wrap;
+            }
+
+            #pause-title {
+                font-size: 38px;
+                margin-bottom: 20px;
+            }
+
+            #resume-btn {
+                padding: 12px 40px;
+                font-size: 20px;
+            }
+
+            #store-title {
+                font-size: 36px;
+            }
+
+            .section-title {
+                font-size: 26px;
+            }
+
+            .store-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .store-item {
+                padding: 15px;
+            }
+
+            .item-preview {
+                width: 80px;
+                height: 80px;
+                font-size: 36px;
+            }
+
+            .item-name {
+                font-size: 16px;
+            }
+
+            .item-price {
+                font-size: 20px;
+            }
+
+            #powerups-hud {
+                bottom: 210px;
+            }
+
+            .powerup-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #game-logo {
+                font-size: clamp(28px, 9vw, 48px);
+            }
+
+            #play-btn,
+            #store-btn,
+            #theme-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+
+            #score {
+                font-size: 28px;
+            }
+
+            #game-over-panel {
+                padding: 25px 15px;
+                width: 90%;
+            }
+
+            #game-over-title {
+                font-size: 32px;
+            }
+
+            .game-over-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .store-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 12px;
+            }
+
+            .mobile-control-btn {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+
+            #btn-left {
+                left: 15px;
+                bottom: 50px;
+            }
+
+            #btn-right {
+                left: 90px;
+                bottom: 50px;
+            }
+
+            #btn-jump {
+                right: 90px;
+                bottom: 50px;
+            }
+
+            #btn-slide {
+                right: 15px;
+                bottom: 50px;
+            }
+
+            #powerups-hud {
+                bottom: 180px;
+                gap: 10px;
+            }
+
+            .powerup-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 26px;
+            }
+        }
     </style>
 </head>
 
@@ -826,7 +1122,7 @@
         </div>
 
         <!-- Tutorial -->
-        <div id="tutorial">Swipe or use Arrow Keys to move!</div>
+        <div id="tutorial">Use buttons, swipe, or arrow keys to play!</div>
 
         <!-- Character Notification -->
         <div id="character-notification"></div>
@@ -893,6 +1189,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div id="mobile-controls">
+            <button id="btn-left" class="mobile-control-btn ui-element">◄</button>
+            <button id="btn-right" class="mobile-control-btn ui-element">►</button>
+            <button id="btn-jump" class="mobile-control-btn ui-element">▲</button>
+            <button id="btn-slide" class="mobile-control-btn ui-element">▼</button>
         </div>
     </div>
 
@@ -4280,6 +4584,108 @@
 
             renderer.render(scene, camera);
             requestAnimationFrame(gameLoop);
+        }
+
+        // ===== INITIALIZATION =====
+        async function init() {
+            document.getElementById('loading').classList.remove('hidden');
+
+            // Initialize Three.js
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 300);
+            camera.position.set(0, CONFIG.CAMERA_HEIGHT, -CONFIG.CAMERA_DISTANCE);
+            camera.lookAt(0, 0, CONFIG.CAMERA_LOOK_AHEAD);
+
+            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gameCanvas'), antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            // Initialize systems
+            ThemeManager.init();
+            SoundManager.init();
+            MissionManager.init();
+
+            // Create scene
+            createLights();
+            createSkyGradient();
+            createGround();
+            createTrack();
+            createPlayer();
+            createClouds(); // Enhanced dynamic clouds
+
+            // Load high score and total coins
+            highScore = parseInt(localStorage.getItem('subwaySurfersHighScore')) || 0;
+            totalCoins = parseInt(localStorage.getItem('totalCoins')) || 0;
+            updateHighScoreDisplay();
+            updateTotalCoins();
+
+            // Initialize character system
+            CharacterManager.init();
+            CharacterManager.loadFromStorage();
+
+            // Event listeners
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('keyup', handleKeyUp);
+            document.addEventListener('touchstart', handleTouchStart, { passive: false });
+            document.addEventListener('touchend', handleTouchEnd, { passive: false });
+            window.addEventListener('resize', handleResize);
+
+            // Button event listeners
+            document.getElementById('play-btn').onclick = startGame;
+            document.getElementById('pause-btn').onclick = togglePause;
+            document.getElementById('resume-btn').onclick = togglePause;
+            document.getElementById('retry-btn').onclick = startGame;
+            document.getElementById('menu-btn').onclick = showMainMenu;
+            document.getElementById('store-btn').onclick = () => StoreManager.open();
+            document.getElementById('close-store-btn').onclick = () => StoreManager.close();
+
+            // Mobile control buttons
+            document.getElementById('btn-left').onclick = (e) => {
+                e.preventDefault();
+                changeLane(-1);
+            };
+            document.getElementById('btn-right').onclick = (e) => {
+                e.preventDefault();
+                changeLane(1);
+            };
+            document.getElementById('btn-jump').onclick = (e) => {
+                e.preventDefault();
+                jump();
+            };
+            document.getElementById('btn-slide').onclick = (e) => {
+                e.preventDefault();
+                slide();
+            };
+
+            // Touch events for mobile buttons (better for mobile)
+            document.getElementById('btn-left').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                changeLane(-1);
+            }, { passive: false });
+            document.getElementById('btn-right').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                changeLane(1);
+            }, { passive: false });
+            document.getElementById('btn-jump').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                jump();
+            }, { passive: false });
+            document.getElementById('btn-slide').addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                slide();
+            }, { passive: false });
+
+            // Initialize store
+            StoreManager.init();
+
+            // Hide loading
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('main-menu').classList.remove('hidden');
+                gameState = 'MENU';
+                gameLoop(0);
+            }, 500);
         }
 
         // ===== START =====
