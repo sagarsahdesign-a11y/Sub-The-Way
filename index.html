@@ -1071,12 +1071,10 @@
     <canvas id="gameCanvas"></canvas>
 
     <div id="ui-container">
-        <!-- Loading Screen -->
         <div id="loading">
             <div id="loading-text">LOADING...</div>
         </div>
 
-        <!-- Main Menu -->
         <div id="main-menu" class="hidden">
             <div id="game-logo">SUBWAY RUSH</div>
             <div id="subtitle">Endless Runner</div>
@@ -1096,7 +1094,6 @@
             </div>
         </div>
 
-        <!-- HUD -->
         <div id="hud" class="hidden">
             <button id="pause-btn" class="ui-element">❚❚</button>
             <div id="score-container">
@@ -1109,7 +1106,6 @@
             </div>
         </div>
 
-        <!-- Power-ups HUD -->
         <div id="powerups-hud" class="hidden">
             <div id="magnet-icon" class="powerup-icon">
                 🧲
@@ -1121,13 +1117,10 @@
             </div>
         </div>
 
-        <!-- Tutorial -->
         <div id="tutorial">Use buttons, swipe, or arrow keys to play!</div>
 
-        <!-- Character Notification -->
         <div id="character-notification"></div>
 
-        <!-- Pause Screen -->
         <div id="pause-screen">
             <div id="pause-panel">
                 <div id="pause-title">PAUSED</div>
@@ -1135,7 +1128,6 @@
             </div>
         </div>
 
-        <!-- Game Over Screen -->
         <div id="game-over">
             <div id="game-over-panel">
                 <div id="game-over-title">GAME OVER</div>
@@ -1163,7 +1155,6 @@
             </div>
         </div>
 
-        <!-- Store Screen -->
         <div id="store-screen">
             <button id="close-store-btn" class="ui-element">✕</button>
             <div id="store-container">
@@ -1178,25 +1169,26 @@
                 <div class="store-section">
                     <div class="section-title">CHARACTERS</div>
                     <div class="store-grid" id="characters-grid">
-                        <!-- Characters will be added dynamically -->
-                    </div>
+                        </div>
                 </div>
 
                 <div class="store-section">
                     <div class="section-title">POWER-UPS (Single Use)</div>
                     <div class="store-grid" id="powerups-grid">
-                        <!-- Power-ups will be added dynamically -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Touch Controls -->
         <div id="mobile-controls">
-            <button id="btn-left" class="mobile-control-btn ui-element">◄</button>
-            <button id="btn-right" class="mobile-control-btn ui-element">►</button>
-            <button id="btn-jump" class="mobile-control-btn ui-element">▲</button>
-            <button id="btn-slide" class="mobile-control-btn ui-element">▼</button>
+            <button id="btn-left" class="mobile-control-btn ui-element"
+                onclick="if(gameState==='PLAYING')changeLane(-1)">◄</button>
+            <button id="btn-right" class="mobile-control-btn ui-element"
+                onclick="if(gameState==='PLAYING')changeLane(1)">►</button>
+            <button id="btn-jump" class="mobile-control-btn ui-element"
+                onclick="if(gameState==='PLAYING')jump()">▲</button>
+            <button id="btn-slide" class="mobile-control-btn ui-element"
+                onclick="if(gameState==='PLAYING')slide()">▼</button>
         </div>
     </div>
 
@@ -1335,6 +1327,10 @@
 
             playTone(frequency, duration, type = 'sine', frequencies = null) {
                 if (this.muted || !this.context) return;
+                // Resume context if suspended (mobile fix)
+                if (this.context.state === 'suspended') {
+                    this.context.resume();
+                }
 
                 const oscillator = this.context.createOscillator();
                 const gainNode = this.context.createGain();
@@ -2011,9 +2007,9 @@
                 // Left rail - enhanced metallic shine
                 const railGeo = new THREE.BoxGeometry(0.1, 0.15, CONFIG.SEGMENT_LENGTH);
                 const railMat = new THREE.MeshStandardMaterial({
-                    color: 0x909090,       // Lighter silver
-                    metalness: 0.9,        // Very metallic
-                    roughness: 0.2         // Shiny
+                    color: 0x909090,        // Lighter silver
+                    metalness: 0.9,         // Very metallic
+                    roughness: 0.2          // Shiny
                 });
 
                 const leftRail = new THREE.Mesh(railGeo, railMat);
@@ -4586,110 +4582,8 @@
             requestAnimationFrame(gameLoop);
         }
 
-        // ===== INITIALIZATION =====
-        async function init() {
-            document.getElementById('loading').classList.remove('hidden');
-
-            // Initialize Three.js
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 300);
-            camera.position.set(0, CONFIG.CAMERA_HEIGHT, -CONFIG.CAMERA_DISTANCE);
-            camera.lookAt(0, 0, CONFIG.CAMERA_LOOK_AHEAD);
-
-            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('gameCanvas'), antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.shadowMap.enabled = true;
-            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-            // Initialize systems
-            ThemeManager.init();
-            SoundManager.init();
-            MissionManager.init();
-
-            // Create scene
-            createLights();
-            createSkyGradient();
-            createGround();
-            createTrack();
-            createPlayer();
-            createClouds(); // Enhanced dynamic clouds
-
-            // Load high score and total coins
-            highScore = parseInt(localStorage.getItem('subwaySurfersHighScore')) || 0;
-            totalCoins = parseInt(localStorage.getItem('totalCoins')) || 0;
-            updateHighScoreDisplay();
-            updateTotalCoins();
-
-            // Initialize character system
-            CharacterManager.init();
-            CharacterManager.loadFromStorage();
-
-            // Event listeners
-            document.addEventListener('keydown', handleKeyDown);
-            document.addEventListener('keyup', handleKeyUp);
-            document.addEventListener('touchstart', handleTouchStart, { passive: false });
-            document.addEventListener('touchend', handleTouchEnd, { passive: false });
-            window.addEventListener('resize', handleResize);
-
-            // Button event listeners
-            document.getElementById('play-btn').onclick = startGame;
-            document.getElementById('pause-btn').onclick = togglePause;
-            document.getElementById('resume-btn').onclick = togglePause;
-            document.getElementById('retry-btn').onclick = startGame;
-            document.getElementById('menu-btn').onclick = showMainMenu;
-            document.getElementById('store-btn').onclick = () => StoreManager.open();
-            document.getElementById('close-store-btn').onclick = () => StoreManager.close();
-
-            // Mobile control buttons
-            document.getElementById('btn-left').onclick = (e) => {
-                e.preventDefault();
-                changeLane(-1);
-            };
-            document.getElementById('btn-right').onclick = (e) => {
-                e.preventDefault();
-                changeLane(1);
-            };
-            document.getElementById('btn-jump').onclick = (e) => {
-                e.preventDefault();
-                jump();
-            };
-            document.getElementById('btn-slide').onclick = (e) => {
-                e.preventDefault();
-                slide();
-            };
-
-            // Touch events for mobile buttons (better for mobile)
-            document.getElementById('btn-left').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                changeLane(-1);
-            }, { passive: false });
-            document.getElementById('btn-right').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                changeLane(1);
-            }, { passive: false });
-            document.getElementById('btn-jump').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                jump();
-            }, { passive: false });
-            document.getElementById('btn-slide').addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                slide();
-            }, { passive: false });
-
-            // Initialize store
-            StoreManager.init();
-
-            // Hide loading
-            setTimeout(() => {
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('main-menu').classList.remove('hidden');
-                gameState = 'MENU';
-                gameLoop(0);
-            }, 500);
-        }
-
-        // ===== START =====
-        window.onload = init;
+        // START GAME WHEN WINDOW LOADS
+        window.addEventListener('load', init);
     </script>
 </body>
 
