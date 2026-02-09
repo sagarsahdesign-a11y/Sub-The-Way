@@ -4259,7 +4259,12 @@
             // Touch
             document.addEventListener('touchstart', handleTouchStart, { passive: false });
             document.addEventListener('touchend', handleTouchEnd, { passive: false });
-            document.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+            document.addEventListener('touchmove', (e) => {
+                // Only block scrolling if we are PLAYING (allows store scroll)
+                if (gameState === 'PLAYING') {
+                    e.preventDefault(); 
+                }
+            }, { passive: false });
 
             // UI Buttons
             document.getElementById('play-btn').addEventListener('click', startGame);
@@ -4319,14 +4324,33 @@
         }
 
         function handleTouchStart(e) {
-            e.preventDefault();
+            const target = e.target;
+            const isInteractive = target.tagName === 'BUTTON' || 
+                                 target.closest('button') || 
+                                 target.closest('.store-item') ||
+                                 target.closest('#store-screen');
+
+            // Only prevent default if we are PLAYING and NOT touching a UI element
+            if (gameState === 'PLAYING' && !isInteractive) {
+                if(e.cancelable) e.preventDefault();
+            }
+            
             touchStartX = e.touches[0].clientX;
             touchStartY = e.touches[0].clientY;
             touchStartTime = Date.now();
         }
 
         function handleTouchEnd(e) {
-            e.preventDefault();
+            const target = e.target;
+            const isInteractive = target.tagName === 'BUTTON' || 
+                                 target.closest('button') || 
+                                 target.closest('.store-item') ||
+                                 target.closest('#store-screen');
+
+            // Only prevent default if we are PLAYING and NOT touching a UI element
+            if (gameState === 'PLAYING' && !isInteractive) {
+                if(e.cancelable) e.preventDefault();
+            }
 
             if (gameState === 'MENU' || gameState === 'GAME_OVER') {
                 return;
